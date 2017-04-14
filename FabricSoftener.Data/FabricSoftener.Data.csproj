@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B2B928F8-2FE2-4B26-91E5-EBEBAF6FA013}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Example</RootNamespace>
-    <AssemblyName>Example</AssemblyName>
+    <RootNamespace>FabricSoftener.Data</RootNamespace>
+    <AssemblyName>FabricSoftener.Data</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,13 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.3\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,30 +56,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Autofac\DiConfig.cs" />
-    <Compile Include="Autofac\ServiceModule.cs" />
-    <Compile Include="Grains\Interfaces\IMyGrain.cs" />
-    <Compile Include="Grains\MyGrain.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Configuration\DataConfig.cs" />
+    <Compile Include="Internal\DataAccess\DataContext.cs" />
+    <Compile Include="Internal\DataAccess\DataProvider.cs" />
+    <Compile Include="Internal\DataAccess\SiloClusterDataContext.cs" />
+    <Compile Include="Internal\Factory\ContextFactory.cs" />
+    <Compile Include="Internal\Interfaces\IDataContext.cs" />
+    <Compile Include="Internal\Interfaces\IDataProvider.cs" />
+    <Compile Include="Internal\Interfaces\ISiloClusterDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartUp\ExampleSilo.cs" />
-    <Compile Include="StartUp\ExampleSiloConfig.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FabricSoftener.Interfaces\FabricSoftener.Interfaces.csproj">
-      <Project>{032c0b6e-d5b8-46e9-b881-c981a7c57914}</Project>
-      <Name>FabricSoftener.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FabricSoftener\FabricSoftener.csproj">
-      <Project>{ed1c5891-95ce-4eb7-bdc5-d8d6d7fe5974}</Project>
-      <Name>FabricSoftener</Name>
+    <ProjectReference Include="..\FabricSoftener.Entities\FabricSoftener.Entities.csproj">
+      <Project>{e4c9f557-0756-48bf-82b9-05fc6e6b36fd}</Project>
+      <Name>FabricSoftener.Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

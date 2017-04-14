@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Autofac;
+using Example.Autofac;
+using FabricSoftener.Interfaces;
 
 namespace Example
 {
@@ -10,6 +8,12 @@ namespace Example
     {
         static void Main(string[] args)
         {
+            var container = DiConfig.Configure();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<ITopShelfSiloApplication>();
+                app.Run();
+            }
         }
     }
 }

@@ -5,6 +5,18 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{B2B928F8-2FE2-4B26-91E5-EBEBAF6FA013}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener", "FabricSoftener\FabricSoftener.csproj", "{ED1C5891-95CE-4EB7-BDC5-D8D6D7FE5974}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener.Core", "FabricSoftener.Core\FabricSoftener.Core.csproj", "{CA7964CF-FE46-4D73-8C40-6E2EC42271C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener.Interfaces", "FabricSoftener.Interfaces\FabricSoftener.Interfaces.csproj", "{032C0B6E-D5B8-46E9-B881-C981A7C57914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener.Entities", "FabricSoftener.Entities\FabricSoftener.Entities.csproj", "{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener.Communicator", "FabricSoftener.Communicator\FabricSoftener.Communicator.csproj", "{0BD3BF65-887C-4507-B7F5-C388F5A73BD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabricSoftener.Data", "FabricSoftener.Data\FabricSoftener.Data.csproj", "{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +27,30 @@ Global
 		{B2B928F8-2FE2-4B26-91E5-EBEBAF6FA013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2B928F8-2FE2-4B26-91E5-EBEBAF6FA013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2B928F8-2FE2-4B26-91E5-EBEBAF6FA013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED1C5891-95CE-4EB7-BDC5-D8D6D7FE5974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED1C5891-95CE-4EB7-BDC5-D8D6D7FE5974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED1C5891-95CE-4EB7-BDC5-D8D6D7FE5974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED1C5891-95CE-4EB7-BDC5-D8D6D7FE5974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7964CF-FE46-4D73-8C40-6E2EC42271C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7964CF-FE46-4D73-8C40-6E2EC42271C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7964CF-FE46-4D73-8C40-6E2EC42271C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7964CF-FE46-4D73-8C40-6E2EC42271C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032C0B6E-D5B8-46E9-B881-C981A7C57914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032C0B6E-D5B8-46E9-B881-C981A7C57914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032C0B6E-D5B8-46E9-B881-C981A7C57914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032C0B6E-D5B8-46E9-B881-C981A7C57914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD3BF65-887C-4507-B7F5-C388F5A73BD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD3BF65-887C-4507-B7F5-C388F5A73BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD3BF65-887C-4507-B7F5-C388F5A73BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD3BF65-887C-4507-B7F5-C388F5A73BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A9ACDC9-B6FC-43E7-9417-86B3FE3B97F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
