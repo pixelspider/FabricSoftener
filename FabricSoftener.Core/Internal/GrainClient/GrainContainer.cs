@@ -14,8 +14,8 @@ namespace FabricSoftener.Core.Internal.GrainClient
         private MessageQueue<GrainMessageResponseEntity<TGrain>> ResponseMessageQueue => GetResponsetMessageQueue();
         private MessageQueue<GrainMessageResponseEntity<TGrain>> _responseMessageQueue;
 
-        private IMessageTransmit MessageTransmit => _messageTransmit ?? (_messageTransmit = new MessageTransmit());
-        private IMessageTransmit _messageTransmit;
+        private IMessageTransmit<TGrain> MessageTransmit => _messageTransmit ?? (_messageTransmit = new MessageTransmit<TGrain>());
+        private IMessageTransmit<TGrain> _messageTransmit;
 
         private IGrainGenerator<TGrain> GrainGenerator => _grainGenerator ?? (_grainGenerator = new GrainGenerator<TGrain>());
         private IGrainGenerator<TGrain> _grainGenerator;
@@ -72,7 +72,7 @@ namespace FabricSoftener.Core.Internal.GrainClient
             if (_responseMessageQueue == null)
             {
                 _responseMessageQueue = new MessageQueue<GrainMessageResponseEntity<TGrain>>();
-                ResponseMessageQueue.Process += MessageTransmit.Transmit;
+                ResponseMessageQueue.Process += MessageTransmit.TransmitResponse;
             }
             return _responseMessageQueue;
         }

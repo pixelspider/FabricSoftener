@@ -1,6 +1,10 @@
 ﻿using DynamicProxy;
+using FabricSoftener.Communicator.Client;
+using FabricSoftener.Communicator.Internal.Server;
+using FabricSoftener.Communicator.Server;
 using FabricSoftener.Core.Internal.AssemblyManagement;
 using FabricSoftener.Core.Internal.Interfaces;
+using FabricSoftener.Core.Internal.Message;
 using FabricSoftener.Entities.Message;
 using FabricSoftener.Interfaces.GrainClient;
 using System;
@@ -14,6 +18,23 @@ namespace FabricSoftener.Core.Internal.ProxyManagement
         private TaskCompletionSource<object> _taskCompletionSource;
         public async Task<object> Invocate<TGrain>(Invocation args) where TGrain : IGrain
         {
+
+            var server = new SocketServer("ws://localhost:1234");
+            server.AddSocketService("/grain", new GrainSocketController());
+            server.Start();
+
+
+            var client = new SocketClient();
+            var d = await client.SendMessageAsync<string, string>("ws://localhost:1234/grain", "Hello");
+
+
+
+
+
+
+
+
+
             _taskCompletionSource = new TaskCompletionSource<object>();
 
             var message = new GrainMessageRequestEntity<TGrain>
@@ -21,6 +42,9 @@ namespace FabricSoftener.Core.Internal.ProxyManagement
                 MethodName = args.Method.Name,
                 Arguments = args.Arguments
             };
+
+            var messageTransmit = new MessageTransmit<TGrain>();
+            messageTransmit.TransmitRequest(message);
 
             Test<TGrain>(args);
 

@@ -93,6 +93,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FabricSoftener.Communicator\FabricSoftener.Communicator.csproj">
+      <Project>{0bd3bf65-887c-4507-b7f5-c388f5a73bd9}</Project>
+      <Name>FabricSoftener.Communicator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FabricSoftener.Data\FabricSoftener.Data.csproj">
       <Project>{8a9acdc9-b6fc-43e7-9417-86b3fe3b97f0}</Project>
       <Name>FabricSoftener.Data</Name>
