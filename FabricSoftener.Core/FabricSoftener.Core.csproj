@@ -36,24 +36,57 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net46\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Linq.3.1.1\lib\net46\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.PlatformServices.3.1.1\lib\net46\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory\CoreFactory.cs" />
-    <Compile Include="Internal\GrainClient\GrainFactoryController.cs" />
+    <Compile Include="Internal\AssemblyManagement\AssemblyRepository.cs" />
+    <Compile Include="Internal\GrainClient\GrainContainer.cs" />
+    <Compile Include="Internal\GrainClient\GrainGenerator.cs" />
+    <Compile Include="Internal\Interfaces\IAssemblyRepository.cs" />
+    <Compile Include="Internal\Interfaces\IGrainContainer.cs" />
+    <Compile Include="Internal\Interfaces\IGrainGenerator.cs" />
+    <Compile Include="Internal\Interfaces\IMessageQueue.cs" />
+    <Compile Include="Internal\Interfaces\IMessageTransmit.cs" />
     <Compile Include="Internal\Interfaces\IProxyGrainFactory.cs" />
     <Compile Include="Internal\Interfaces\IProxyInvocation.cs" />
     <Compile Include="Internal\Interfaces\ISiloManager.cs" />
     <Compile Include="Internal\Interfaces\ISiloLocalGrainManager.cs" />
-    <Compile Include="Internal\Interfaces\ServerGrains\ISiloManagmentGrain.cs" />
+    <Compile Include="Internal\Message\MessageQueue.cs" />
+    <Compile Include="Internal\Message\MessageTransmit.cs" />
+    <Compile Include="ServerGrains\Interfaces\ISiloManagmentGrain.cs" />
+    <Compile Include="ServerGrains\Interfaces\ISiloManagmentHelper.cs" />
     <Compile Include="Internal\ProxyManagement\ProxyGrainFactory.cs" />
     <Compile Include="Internal\ProxyManagement\ProxyInvocation.cs" />
-    <Compile Include="Internal\ServerGrains\SiloManagmentGrain.cs" />
+    <Compile Include="ServerGrains\SiloManagment\SiloManagmentGrain.cs" />
+    <Compile Include="ServerGrains\SiloManagment\SiloManagmentHelper.cs" />
     <Compile Include="Internal\Silo\SiloController.cs" />
     <Compile Include="Internal\Silo\SiloLocalGrainManager.cs" />
     <Compile Include="Internal\SiloCluster\SiloManager.cs" />
@@ -64,6 +97,10 @@
       <Project>{8a9acdc9-b6fc-43e7-9417-86b3fe3b97f0}</Project>
       <Name>FabricSoftener.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FabricSoftener.Entities\FabricSoftener.Entities.csproj">
+      <Project>{E4C9F557-0756-48BF-82B9-05FC6E6B36FD}</Project>
+      <Name>FabricSoftener.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FabricSoftener.Interfaces\FabricSoftener.Interfaces.csproj">
       <Project>{032C0B6E-D5B8-46E9-B881-C981A7C57914}</Project>
       <Name>FabricSoftener.Interfaces</Name>
@@ -71,6 +108,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

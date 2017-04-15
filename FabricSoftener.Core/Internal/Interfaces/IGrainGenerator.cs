@@ -2,8 +2,8 @@
 
 namespace FabricSoftener.Core.Internal.Interfaces
 {
-    public interface IProxyGrainFactory
+    internal interface IGrainGenerator<TGrain> where TGrain : IGrain
     {
-        TGrain CreateProxy<TGrain>() where TGrain : IGrain;
+        TGrain Generate();
     }
 }

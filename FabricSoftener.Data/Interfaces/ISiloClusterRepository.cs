@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FabricSoftener.Data.Internal.Interfaces
+namespace FabricSoftener.Data.Interfaces
 {
-    public interface ISiloClusterDataContext
+    public interface ISiloClusterRepository
     {
         Task<long> GetActiveSiloAnyClusterCountAsync();
         Task<long> GetActiveSiloInClusterCountAsync(string clusterName);
-        Task<IEnumerable<SiloClusterEntity>> GetAllHostSilosAsync(string hostName);
+        Task<IEnumerable<int>> GetAllHostPortsAsync(string hostName);
         Task RegisterSiloAsync(SiloClusterEntity siloClusterEntity);
     }
 }

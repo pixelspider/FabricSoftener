@@ -1,8 +1,7 @@
-﻿using FabricSoftener.Core.Internal.GrainClient;
+﻿using FabricSoftener.Core.Internal.Interfaces;
 using FabricSoftener.Core.Internal.ProxyManagement;
 using FabricSoftener.Core.Internal.Silo;
 using FabricSoftener.Data.Configuration;
-using FabricSoftener.Interfaces.GrainClient;
 using FabricSoftener.Interfaces.Silo;
 
 namespace FabricSoftener.Core.Factory
@@ -15,9 +14,9 @@ namespace FabricSoftener.Core.Factory
             return new SiloController(config, silo);
         }
 
-        public static IGrainFactoryController CreateGrainFactoryController()
+        public static IProxyGrainFactory GrainFactory()
         {
-            return new GrainFactoryController(new SiloLocalGrainManager(), new ProxyGrainFactory(new ProxyInvocation()));
+            return new ProxyGrainFactory();
         }
     }
 }

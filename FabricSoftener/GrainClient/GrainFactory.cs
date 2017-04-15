@@ -1,17 +1,18 @@
 ﻿using FabricSoftener.Core.Factory;
+using FabricSoftener.Core.Internal.Interfaces;
 using FabricSoftener.Interfaces.GrainClient;
 
 namespace FabricSoftener.GrainClient
 {
     public class GrainFactory : IGrainFactory
     {
-        private static IGrainFactoryController _grainFactoryController;
+        private static IProxyGrainFactory _proxyGrainFactory;
 
         public TGrain GetGrain<TGrain>() where TGrain : IGrain
         {
-            return GrainFactoryController.GetGrain<TGrain>();
+            return ProxyGrainFactory.CreateProxy<TGrain>();
         }
 
-        private static IGrainFactoryController GrainFactoryController => _grainFactoryController ?? (_grainFactoryController = CoreFactory.CreateGrainFactoryController());
+        private static IProxyGrainFactory ProxyGrainFactory => _proxyGrainFactory ?? (_proxyGrainFactory = CoreFactory.GrainFactory());
     }
 }

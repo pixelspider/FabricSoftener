@@ -1,13 +1,48 @@
-﻿using FabricSoftener.Core.Internal.Interfaces;
+﻿using DynamicProxy;
+using FabricSoftener.Core.Internal.AssemblyManagement;
+using FabricSoftener.Core.Internal.Interfaces;
+using FabricSoftener.Entities.Message;
+using FabricSoftener.Interfaces.GrainClient;
+using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FabricSoftener.Core.Internal.ProxyManagement
 {
     internal class ProxyInvocation : IProxyInvocation
     {
-        public Task<object> Invocate<TGrain>(DynamicProxy.Invocation args)
+        private TaskCompletionSource<object> _taskCompletionSource;
+        public async Task<object> Invocate<TGrain>(Invocation args) where TGrain : IGrain
         {
-            return Task.FromResult((object)1234);
+            _taskCompletionSource = new TaskCompletionSource<object>();
+
+            var message = new GrainMessageRequestEntity<TGrain>
+            {
+                MethodName = args.Method.Name,
+                Arguments = args.Arguments
+            };
+
+            Test<TGrain>(args);
+
+            return await _taskCompletionSource.Task;
+
+            //return await TransmitMessage(message);
+        }
+
+        private void MessageReponseEvent(object response)
+        {
+            _taskCompletionSource.SetResult(response);
+        }
+
+        private async void Test<TGrain>(Invocation args) where TGrain : IGrain
+        {
+            var assemblyRepository = new AssemblyRepository();
+            var grainType = assemblyRepository.GetActualType<TGrain>();
+            if (grainType == null)
+                MessageReponseEvent(null);
+            var grain = (IGrain)Activator.CreateInstance(grainType);
+            //var f = await(dynamic)grain.GetType().GetTypeInfo().GetDeclaredMethod(args.Method.Name).Invoke(grain, args.Arguments);
+            MessageReponseEvent(grain.GetType().GetTypeInfo().GetDeclaredMethod(args.Method.Name).Invoke(grain, args.Arguments));
         }
     }
 }

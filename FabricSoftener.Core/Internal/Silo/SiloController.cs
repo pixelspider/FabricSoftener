@@ -1,4 +1,7 @@
-﻿using FabricSoftener.Interfaces.Silo;
+﻿using FabricSoftener.Core.Factory;
+using FabricSoftener.Core.ServerGrains.Interfaces;
+using FabricSoftener.Interfaces.Silo;
+using System.Net;
 
 namespace FabricSoftener.Core.Internal.Silo
 {
@@ -13,9 +16,18 @@ namespace FabricSoftener.Core.Internal.Silo
             _silo = silo;
         }
 
-        public void Start()
+        public async void Start()
         {
-            _silo.Start();
+            var siloManagmentGrain = CoreFactory.GrainFactory().CreateProxy<ISiloManagmentGrain>();
+            var success = await siloManagmentGrain.RegisterSiloAsync(_config.ServiceName, Dns.GetHostName());
+            if (success)
+            {
+                _silo.Start();
+            }
+            else
+            {
+                _silo.Stop();
+            }
         }
 
         public void Stop()

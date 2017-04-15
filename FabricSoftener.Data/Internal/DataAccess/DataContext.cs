@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FabricSoftener.Data.Internal.Interfaces;
 using FabricSoftener.Entities.Data;
@@ -8,9 +9,10 @@ namespace FabricSoftener.Data.Internal.DataAccess
 {
     internal class DataContext : IDataContext
     {
-        private readonly IDataProvider _dataProvider;
+        private IDataProvider DataProvider => _dataProvider ?? (_dataProvider = new DataProvider());
+        private IDataProvider _dataProvider;
 
-        public DataContext(IDataProvider dataProvider)
+        public DataContext(IDataProvider dataProvider = null)
         {
             _dataProvider = dataProvider;
         }
@@ -27,12 +29,22 @@ namespace FabricSoftener.Data.Internal.DataAccess
 
         public IMongoCollection<TEntity> GetCollection<TEntity>(string collectionName) where TEntity : IEntity
         {
-            return _dataProvider.GetDatabase().GetCollection<TEntity>(collectionName);
+            return DataProvider.GetDatabase().GetCollection<TEntity>(collectionName);
         }
 
         public async Task<IEnumerable<TEntity>> SortAsync<TEntity>(IMongoCollection<TEntity> contextCollection, FilterDefinition<TEntity> filter, SortDefinition<TEntity> sort) where TEntity : IEntity
         {
             return await contextCollection.Find(filter).Sort(sort).ToListAsync();
+        }
+
+        public async Task<long> CountAsync<TEntity>(IMongoCollection<TEntity> contextCollection, FilterDefinition<TEntity> filter) where TEntity : IEntity
+        {
+            return await contextCollection.CountAsync(filter);
+        }
+
+        public Task InsertOneAsync<TEntity>(IMongoCollection<TEntity> contextCollection, TEntity data) where TEntity : IEntity
+        {
+            return contextCollection.InsertOneAsync(data);
         }
     }
 }

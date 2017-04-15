@@ -57,14 +57,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\DataConfig.cs" />
+    <Compile Include="Interfaces\ISiloClusterRepository.cs" />
     <Compile Include="Internal\DataAccess\DataContext.cs" />
     <Compile Include="Internal\DataAccess\DataProvider.cs" />
     <Compile Include="Internal\DataAccess\SiloClusterDataContext.cs" />
-    <Compile Include="Internal\Factory\ContextFactory.cs" />
     <Compile Include="Internal\Interfaces\IDataContext.cs" />
     <Compile Include="Internal\Interfaces\IDataProvider.cs" />
     <Compile Include="Internal\Interfaces\ISiloClusterDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\SiloClusterRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
