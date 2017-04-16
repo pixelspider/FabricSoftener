@@ -27,6 +27,8 @@ namespace FabricSoftener.Core.Internal.ProxyManagement
             var client = new SocketClient();
             var d = await client.SendMessageAsync<string, string>("ws://localhost:1234/grain", "Hello");
 
+            var dd = await client.SendMessageAsync<string, string>("ws://localhost:1234/grain", "Hello");
+
 
 
 

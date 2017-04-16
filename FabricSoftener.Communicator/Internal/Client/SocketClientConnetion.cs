@@ -13,6 +13,7 @@ namespace FabricSoftener.Communicator.Internal.Client
         public SocketClientConnetion(WebSocket webSocketClient)
         {
             _webSocketClient = webSocketClient;
+            _webSocketClient.Connect();
             _webSocketClient.OnMessage += MessageRecieved;
             _webSocketClient.OnError += ErrorRecieved;
         }

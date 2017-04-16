@@ -7,7 +7,8 @@ namespace FabricSoftener.Communicator.Server
     {
         public override void Request(byte[] messageData)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            base.Response(messageData);
         }
     }
 }
