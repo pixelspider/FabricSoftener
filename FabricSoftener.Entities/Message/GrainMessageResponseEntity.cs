@@ -5,7 +5,7 @@ using System;
 namespace FabricSoftener.Entities.Message
 {
     [Serializable]
-    public class GrainMessageResponseEntity<TGrain> : BaseEntity, IGrainMessage where TGrain : IGrain
+    public class GrainMessageResponseEntity: BaseEntity, IGrainMessage
     {
         public string RequesterSiloId { get; set; }
         public string ResponseTaskCompletionSourceId { get; set; }

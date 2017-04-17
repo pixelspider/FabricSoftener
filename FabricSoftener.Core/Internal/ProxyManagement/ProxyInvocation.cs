@@ -14,13 +14,14 @@ namespace FabricSoftener.Core.Internal.ProxyManagement
 
         public async Task<object> Invocate<TGrain>(Invocation args) where TGrain : IGrain
         {
-            var message = new GrainMessageRequestEntity<TGrain>
+            var message = new GrainMessageRequestEntity
             {
+                GrainType = typeof(TGrain),
                 MethodName = args.Method.Name,
                 Arguments = args.Arguments
             };
 
-            var taskCompletionSource = MessageTransmit.TransmitRequestAsync(message);
+            var taskCompletionSource = MessageTransmit.TransmitRequestFromProxyAsync(message);
 
             return await taskCompletionSource.Task;
         }

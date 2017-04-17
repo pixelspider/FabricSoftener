@@ -6,13 +6,13 @@ using System.Reflection;
 
 namespace FabricSoftener.Core.Internal.GrainClient
 {
-    internal class GrainContainer<TGrain> : IGrainContainer<TGrain> where TGrain : IGrain
+    internal class GrainContainer<TGrain> : IGrainContainer where TGrain : IGrain
     {
-        private MessageQueue<GrainMessageRequestEntity<TGrain>> RequestMessageQueue => GetRequestMessageQueue();
-        private MessageQueue<GrainMessageRequestEntity<TGrain>> _requestMessageQueue;
+        private MessageQueue<GrainMessageRequestEntity> RequestMessageQueue => GetRequestMessageQueue();
+        private MessageQueue<GrainMessageRequestEntity> _requestMessageQueue;
 
-        private MessageQueue<GrainMessageResponseEntity<TGrain>> ResponseMessageQueue => GetResponsetMessageQueue();
-        private MessageQueue<GrainMessageResponseEntity<TGrain>> _responseMessageQueue;
+        private MessageQueue<GrainMessageResponseEntity> ResponseMessageQueue => GetResponsetMessageQueue();
+        private MessageQueue<GrainMessageResponseEntity> _responseMessageQueue;
 
         private IMessageTransmit MessageTransmit => _messageTransmit ?? (_messageTransmit = new MessageTransmit());
         private IMessageTransmit _messageTransmit;
@@ -25,26 +25,30 @@ namespace FabricSoftener.Core.Internal.GrainClient
 
         private bool _isBusy;
 
-        public GrainContainer(MessageQueue<GrainMessageRequestEntity<TGrain>> requestMessageQueue = null, IGrainGenerator<TGrain> grainGenerator = null)
+        public GrainContainer() : this(null, null) { }
+        public GrainContainer(MessageQueue<GrainMessageRequestEntity> requestMessageQueue, IGrainGenerator<TGrain> grainGenerator)
         {
             _requestMessageQueue = requestMessageQueue;
             _grainGenerator = grainGenerator;
         }
 
         public bool IsBusy => _isBusy;
-        public void ProcessMessage(GrainMessageRequestEntity<TGrain> message)
+        public void ProcessMessage(GrainMessageRequestEntity message)
         {
             RequestMessageQueue.Add(message);
         }
 
-        private void ProcessRequest(IGrainMessage message)
+        private async void ProcessRequest(IGrainMessage message)
         {
-            var requestMessage = (GrainMessageRequestEntity<TGrain>)message;
-            var response = new GrainMessageResponseEntity<TGrain>
+            var requestMessage = (GrainMessageRequestEntity)message;
+
+            var result = await (dynamic)Grain.GetType().GetTypeInfo().GetDeclaredMethod(requestMessage.MethodName).Invoke(Grain, requestMessage.Arguments);
+
+            var response = new GrainMessageResponseEntity
             {
                 RequesterSiloId = requestMessage.RequesterSiloId,
                 ResponseTaskCompletionSourceId = requestMessage.ResponseTaskCompletionSourceId,
-                Result = Grain.GetType().GetTypeInfo().GetDeclaredMethod(requestMessage.MethodName).Invoke(Grain, requestMessage.Arguments)
+                Result = result
             }; 
             ResponseMessageQueue.Add(response);
         }
@@ -58,21 +62,21 @@ namespace FabricSoftener.Core.Internal.GrainClient
             return _grain;
         }
 
-        private MessageQueue<GrainMessageRequestEntity<TGrain>> GetRequestMessageQueue()
+        private MessageQueue<GrainMessageRequestEntity> GetRequestMessageQueue()
         {
             if(_requestMessageQueue == null)
             {
-                _requestMessageQueue = new MessageQueue<GrainMessageRequestEntity<TGrain>>();
+                _requestMessageQueue = new MessageQueue<GrainMessageRequestEntity>();
                 RequestMessageQueue.Process += ProcessRequest;
             }
             return _requestMessageQueue;
         }
 
-        private MessageQueue<GrainMessageResponseEntity<TGrain>> GetResponsetMessageQueue()
+        private MessageQueue<GrainMessageResponseEntity> GetResponsetMessageQueue()
         {
             if (_responseMessageQueue == null)
             {
-                _responseMessageQueue = new MessageQueue<GrainMessageResponseEntity<TGrain>>();
+                _responseMessageQueue = new MessageQueue<GrainMessageResponseEntity>();
                 ResponseMessageQueue.Process += TransmitResponseMessage;
             }
             return _responseMessageQueue;
@@ -80,7 +84,7 @@ namespace FabricSoftener.Core.Internal.GrainClient
 
         private void TransmitResponseMessage(IGrainMessage message)
         {
-            MessageTransmit.TransmitResponseAsync((GrainMessageResponseEntity<TGrain>)message);
+            MessageTransmit.TransmitResponseAsync((GrainMessageResponseEntity)message);
         }
     }
 }

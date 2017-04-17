@@ -6,7 +6,7 @@ using FabricSoftener.Entities.Configuration;
 namespace FabricSoftener.Entities.Message
 {
     [Serializable]
-    public class GrainMessageRequestEntity<TGrain> : BaseEntity, IGrainMessage where TGrain : IGrain
+    public class GrainMessageRequestEntity : BaseEntity, IGrainMessage
     {
         private string _requesterSiloId;
         public string RequesterSiloId
@@ -22,6 +22,10 @@ namespace FabricSoftener.Entities.Message
                 _requesterSiloId = value;
             }
         }
+        public string DestinationSiloId { get; set; }
+        public string DestinationSiloEndpoint { get; set; }
+        public bool IsSameSilo => RequesterSiloId == DestinationSiloId;
+        public bool DoesGrainExist { get; set; }
         public string ResponseTaskCompletionSourceId { get; set; }
         public Type GrainType { get; set; }
         public string MethodName { get; set; }
