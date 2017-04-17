@@ -1,4 +1,4 @@
-﻿using FabricSoftener.Data.Configuration;
+﻿using FabricSoftener.Entities.Configuration;
 using FabricSoftener.Data.Internal.Interfaces;
 using MongoDB.Driver;
 

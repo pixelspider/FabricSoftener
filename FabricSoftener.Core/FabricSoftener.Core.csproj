@@ -81,6 +81,7 @@
     <Compile Include="Internal\Interfaces\ISiloLocalGrainManager.cs" />
     <Compile Include="Internal\Message\MessageQueue.cs" />
     <Compile Include="Internal\Message\MessageTransmit.cs" />
+    <Compile Include="Internal\Message\Server\GrainResponseSocketController.cs" />
     <Compile Include="ServerGrains\Interfaces\ISiloManagmentGrain.cs" />
     <Compile Include="ServerGrains\Interfaces\ISiloManagmentHelper.cs" />
     <Compile Include="Internal\ProxyManagement\ProxyGrainFactory.cs" />

@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\DataConfig.cs" />
     <Compile Include="Interfaces\ISiloClusterRepository.cs" />
     <Compile Include="Internal\DataAccess\DataContext.cs" />
     <Compile Include="Internal\DataAccess\DataProvider.cs" />

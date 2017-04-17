@@ -8,7 +8,9 @@ namespace FabricSoftener.Communicator.Server
         public override void Request(byte[] messageData)
         {
             //throw new NotImplementedException();
-            base.Response(messageData);
+            //System.Threading.Thread.Sleep(60);
+            if(messageData.Length > 30)
+                base.Response(messageData);
         }
     }
 }

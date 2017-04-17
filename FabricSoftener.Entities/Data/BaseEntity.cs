@@ -3,6 +3,7 @@ using System;
 
 namespace FabricSoftener.Entities.Data
 {
+    [Serializable]
     public abstract class BaseEntity : IEntity
     {
         private string _id;

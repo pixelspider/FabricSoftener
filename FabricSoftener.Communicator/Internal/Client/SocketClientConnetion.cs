@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using FabricSoftener.Communicator.Internal.Interfaces;
 using WebSocketSharp;
+using System;
+using System.Linq;
 
 namespace FabricSoftener.Communicator.Internal.Client
 {
@@ -21,6 +23,8 @@ namespace FabricSoftener.Communicator.Internal.Client
         public Task<byte[]> SendMessageAsync(byte[] messageData)
         {
             _taskCompletionSource = new TaskCompletionSource<byte[]>();
+            var id = _taskCompletionSource.Task.Id.ToByteArray(ByteOrder.Big);
+            messageData = id.Concat(messageData).ToArray();
             var caller = new AsyncMethodCaller(WebSocketClientSendAsync);
             caller.BeginInvoke(messageData, null, null);
             return _taskCompletionSource.Task;
@@ -28,6 +32,11 @@ namespace FabricSoftener.Communicator.Internal.Client
 
         private void WebSocketClientSendAsync(byte[] messageData)
         {
+            byte[] id = messageData.Take(4).ToArray();
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(id);
+            var d = BitConverter.ToInt32(id, 0);
+
             _webSocketClient.SendAsync(messageData, OnCompletion);
         }
 
@@ -38,7 +47,7 @@ namespace FabricSoftener.Communicator.Internal.Client
         private void MessageRecieved(object sender, MessageEventArgs args)
         {
             _taskCompletionSource.SetResult(args.RawData);
-            _webSocketClient.Close();
+            //_webSocketClient.Close();
         }
         private void ErrorRecieved(object sender, ErrorEventArgs args)
         {

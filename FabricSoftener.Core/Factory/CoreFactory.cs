@@ -1,7 +1,7 @@
 ﻿using FabricSoftener.Core.Internal.Interfaces;
 using FabricSoftener.Core.Internal.ProxyManagement;
 using FabricSoftener.Core.Internal.Silo;
-using FabricSoftener.Data.Configuration;
+using FabricSoftener.Entities.Configuration;
 using FabricSoftener.Interfaces.Silo;
 
 namespace FabricSoftener.Core.Factory
